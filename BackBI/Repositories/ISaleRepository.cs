@@ -23,8 +23,8 @@ namespace BackBI.Repository
             //Task<IEnumerable<object>> GetSalesByYearAsync();
             //Task<IEnumerable<object>> GetSalesTrendAsync();
 
-        
+
+        }
     }
-}
 
 

@@ -16,7 +16,18 @@ public partial class DWContext : DbContext
         : base(options)
     {
     }
+    public DbSet<SalesByPackageType> SalesByPackageType { get; set; }
+    public DbSet<PurchaseBySupplier> Purchase_BySupplier { get; set; }
+
+    public DbSet<SalesVsPurchase> SalesVsPurchase { get; set; }
+
+    public DbSet<PurchaseByPackageType> PurchaseByPackageType { get; set; }
+    public DbSet<Purchase_Ordered_vs_Received> Purchase_Ordered_vs_Received { get; set; }
+    public DbSet<PurchaseByStockItem> PurchaseByStockItem { get; set; }
+    public DbSet<SalesByDeliveryMethodYear> SalesByDeliveryMethodYear { get; set; }
     public DbSet<SalesByMonth> SalesByMonth { get; set; }
+    public DbSet<SalesByYears> SalesByYears { get; set; }
+    public DbSet<SalesByEmployeeYear> SalesByEmployeeYear { get; set; }
 
     public virtual DbSet<City> Cities { get; set; }
 
@@ -43,6 +54,7 @@ public partial class DWContext : DbContext
     public virtual DbSet<Supplier> Suppliers { get; set; }
 
     public virtual DbSet<TransactionType> TransactionTypes { get; set; }
+    
 
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
 #warning To protect potentially sensitive information in your connection string, you should move it out of source code. You can avoid scaffolding the connection string by using the Name= syntax to read it from configuration - see https://go.microsoft.com/fwlink/?linkid=2131148. For more guidance on storing connection strings, see https://go.microsoft.com/fwlink/?LinkId=723263.
@@ -349,6 +361,24 @@ public partial class DWContext : DbContext
         });
 
         modelBuilder.Entity<SalesByMonth>().HasNoKey().ToView("vw_SalesByMonth");
+
+        modelBuilder.Entity<SalesByYears>().HasNoKey().ToView("GetSalesByProductYear");
+
+        modelBuilder.Entity<SalesByEmployeeYear>().HasNoKey().ToView("GetSalesByEmployeeYear");
+
+        modelBuilder.Entity<SalesByDeliveryMethodYear>().HasNoKey().ToView("GetSalesByDeliveryMethodYear");
+
+        modelBuilder.Entity<PurchaseByPackageType>().HasNoKey().ToView("vw_Purchase_ByPackageType");
+
+        modelBuilder.Entity<SalesByPackageType>().HasNoKey().ToView("GetSalesByPackageType");
+
+        modelBuilder.Entity<PurchaseByStockItem>().HasNoKey().ToView("vw_Purchase_ByStockItem");
+
+        modelBuilder.Entity<Purchase_Ordered_vs_Received>().HasNoKey().ToView("vw_Purchase_Ordered_vs_Received");
+
+        modelBuilder.Entity<PurchaseBySupplier>().HasNoKey().ToView("vw_Purchase_BySupplier");
+
+        modelBuilder.Entity<SalesVsPurchase>().HasNoKey().ToView("vw_Sales_vs_Purchase");
 
         OnModelCreatingPartial(modelBuilder);
     }

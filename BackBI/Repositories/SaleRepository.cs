@@ -82,6 +82,7 @@ namespace BackBI.Repository
         // fonctions d’agrégation
         public async Task<IEnumerable<object>> GetSalesByDayAsync()
         {
+            _context.Database.SetCommandTimeout(180);
             return await _context.Sales
                 .Join(_context.Dates,
                       s => s.InvoiceDateKey,
@@ -103,6 +104,36 @@ namespace BackBI.Repository
                 .OrderBy(x => x.Month)
                 .ToListAsync();
         }
+
+        public async Task<List<SalesByYears>> GetSalesByYears()
+        {
+            _context.Database.SetCommandTimeout(180);
+            return await _context.SalesByYears
+                .OrderBy(x => x.Years)
+                .ToListAsync();
+        }
+
+        public async Task<List<SalesByEmployeeYear>> GetSalesByEmployeeYear()
+        {
+            _context.Database.SetCommandTimeout(180);
+            return await _context.SalesByEmployeeYear
+                .OrderBy(x => x.Years)
+                .ToListAsync();
+        }
+
+        public async Task<List<SalesByDeliveryMethodYear>> GetSalesByDeliveryMethodYear()
+        {
+            _context.Database.SetCommandTimeout(180);
+            return await _context.SalesByDeliveryMethodYear.ToListAsync();
+        }
+
+        public async Task<List<SalesByPackageType>> GetSalesByPackageType()
+        {
+            _context.Database.SetCommandTimeout(180);
+            return await _context.SalesByPackageType.ToListAsync();
+        }
+
+       
 
     }
 

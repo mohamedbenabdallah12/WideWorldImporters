@@ -1,6 +1,5 @@
-
-
 using BackBI.Models;
+using BackBI.Repositories;
 using BackBI.Repository;
 using Microsoft.EntityFrameworkCore;
 
@@ -13,15 +12,27 @@ namespace BackBI
             var builder = WebApplication.CreateBuilder(args);
 
             // Add services to the container.
-
-            builder.Services.AddControllers();
-            // Learn more about configuring OpenAPI at https://aka.ms/aspnet/openapi
-            builder.Services.AddOpenApi();
             builder.Services.AddControllers();
             builder.Services.AddSwaggerGen();
+            builder.Services.AddOpenApi();
+
             builder.Services.AddDbContext<DWContext>(options =>
-            options.UseSqlServer(builder.Configuration.GetConnectionString("DWConnection")));
-            builder.Services.AddScoped<ISaleRepository ,SaleRepository>();
+                options.UseSqlServer(builder.Configuration.GetConnectionString("DWConnection")));
+
+            builder.Services.AddScoped<ISaleRepository, SaleRepository>();
+            builder.Services.AddScoped<IPurchaseRepository, PurchaseRepository>();
+
+            // ---- Add CORS policy ----
+            builder.Services.AddCors(options =>
+            {
+                options.AddPolicy("AllowLocalhost",
+                    policy =>
+                    {
+                        policy.WithOrigins("http://localhost:8081") // your frontend URL
+                              .AllowAnyHeader()
+                              .AllowAnyMethod();
+                    });
+            });
 
             var app = builder.Build();
 
@@ -35,8 +46,10 @@ namespace BackBI
 
             app.UseHttpsRedirection();
 
-            app.UseAuthorization();
+            // ---- Use CORS BEFORE MapControllers ----
+            app.UseCors("AllowLocalhost");
 
+            app.UseAuthorization();
 
             app.MapControllers();
 

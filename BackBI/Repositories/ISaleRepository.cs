@@ -16,13 +16,17 @@ namespace BackBI.Repository
             Task<IEnumerable<Sale>> GetByPackageTypeIdAsync(int packageTypeId);
             Task<IEnumerable<Sale>> GetByMethodDeliveryIdAsync(int methodDeliveryId);
             Task<List<SalesByMonth>> GetSalesByMonthAsync();
+            Task<List<SalesByYears>> GetSalesByYears();
+            Task<List<SalesByEmployeeYear>> GetSalesByEmployeeYear();
+
+            Task<List<SalesByDeliveryMethodYear>>GetSalesByDeliveryMethodYear();
+
+            
+        Task<List<SalesByPackageType>> GetSalesByPackageType();
 
         //fonction d'agrégation pour le dashboarding 
-            Task<IEnumerable<object>> GetSalesByDayAsync();
-            //Task<IEnumerable<object>> GetSalesByMonthAsync();
-            //Task<IEnumerable<object>> GetSalesByYearAsync();
-            //Task<IEnumerable<object>> GetSalesTrendAsync();
-
+        Task<IEnumerable<object>> GetSalesByDayAsync();
+       
 
         }
     }

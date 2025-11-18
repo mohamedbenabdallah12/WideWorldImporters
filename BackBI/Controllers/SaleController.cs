@@ -96,7 +96,32 @@ namespace BackBI.Controllers
             var result = await _repository.GetSalesByMonthAsync();
             return Ok(result);
         }
-
+        [HttpGet("by-years")]
+        public async Task<IActionResult> GetSalesByYears()
+        {
+            var result = await _repository.GetSalesByYears();
+            return Ok(result);
+        }
+        [HttpGet("by-Employee-by-Year")]
+        public async Task<IActionResult> GetSalesByEmployeeYear()
+        {
+            var result = await _repository.GetSalesByEmployeeYear();
+            return Ok(result);
+        }
+        [HttpGet("by-Methods")]
+        public async Task<IActionResult> SalesByDeliveryMethodYear()
+        {
+            var result = await _repository.GetSalesByDeliveryMethodYear();
+            return Ok(result);
+        }
+        
+        [HttpGet("by-packageType")]
+        public async Task<IActionResult> SalesByPackageType()
+        {
+            var result = await _repository.GetSalesByPackageType();
+            return Ok(result);
+        }
+        
 
     }
 }
